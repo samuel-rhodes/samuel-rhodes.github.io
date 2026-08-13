@@ -445,6 +445,7 @@ blockquote footer {
 
 .teaching-figure {
   margin-top: clamp(3.5rem, 7vw, 6rem);
+  margin-inline: auto;
 }
 
 .teaching-figure img {
