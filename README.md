@@ -39,3 +39,7 @@ The production launch is outside this pass. A later authorized launch should:
 - revalidate links, accessibility, responsive layouts, and search metadata.
 
 No analytics, trackers, forms, external fonts, JavaScript libraries, frameworks, build dependencies, or GitHub Actions workflows are used.
+
+## Pass 2 review state
+
+The Pass 2 preview retains the Washington hero and adds two locally stored, documented web derivatives: Samuel C. Rhodes’s authorized 2024 headshot in About and the exact Ronald Reagan classroom photograph from the prior academic site in Teaching. Source images and validation records remain outside the public repository.
