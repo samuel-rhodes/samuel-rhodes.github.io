@@ -1,16 +1,14 @@
 # Image Attributions
 
-## George Washington hero image
+## John Trumbull hero painting
 
-**Work depicted:** John Trumbull, *General George Washington Resigning His Commission* (1824), U.S. Capitol Rotunda.
+**Work:** John Trumbull, *General George Washington Resigning His Commission* (1824), oil on canvas, United States Capitol Rotunda.
 
-**Preview image:** “George Washington resigning his commission, painting in Capitol, [Washington, D.C.],” National Photo Company Collection, between 1910 and 1926. Library of Congress Prints and Photographs Division, reproduction number LC-DIG-npcc-32426.
-
-- Source record: <https://www.loc.gov/item/2016825791/>
-- Digital image: <https://cdn.loc.gov/service/pnp/npcc/32400/32426v.jpg>
-- Rights advisory: No known restrictions on publication.
-
-The image is stored locally for this site; it is not hotlinked. No Adobe Express asset is included in the repository.
+- Source image: Wikimedia Commons, `File:General George Washington Resigning his Commission.jpg`
+- Source page: <https://commons.wikimedia.org/wiki/File:General_George_Washington_Resigning_his_Commission.jpg>
+- Source/photographer listed by Wikimedia Commons: Architect of the Capitol
+- Status: Public domain in the United States; Wikimedia Commons marks the faithful reproduction with the Creative Commons Public Domain Mark 1.0.
+- The website uses a local web derivative and does not hotlink the Commons file.
 
 ## Samuel C. Rhodes headshot
 
