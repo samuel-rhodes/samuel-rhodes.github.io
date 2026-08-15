@@ -1,22 +1,26 @@
 # Samuel C. Rhodes Academic Website
 
-This repository contains the review-only static preview of Samuel C. Rhodes’s academic website.
+This repository contains the production static website for Samuel C. Rhodes.
 
-## Preview
+## Production
 
-The temporary review build is published at <https://samuel-rhodes.github.io/>.
+The canonical site is <https://www.samrhodesphd.com/>.
 
-The custom domain is **not connected** during this review pass. The build is intentionally marked `noindex` until a later, separately authorized production launch.
+GitHub Pages publishes from `main` at the repository root. The custom domain is `www.samrhodesphd.com`, HTTPS enforcement is active, the homepage is indexable, and the custom `404.html` remains `noindex`.
+
+The production sitemap is <https://www.samrhodesphd.com/sitemap.xml>. This repository does not claim that a search engine has already indexed the site.
 
 ## Structure
 
-- `index.html` — single-page academic website
-- `404.html` — custom not-found page
+- `index.html` — single-page academic website and production metadata
+- `404.html` — custom not-found page; intentionally `noindex`
+- `CNAME` — GitHub Pages custom domain; preserve exactly as `www.samrhodesphd.com`
+- `sitemap.xml` — canonical homepage only
+- `robots.txt` — permits crawling and declares the production sitemap
 - `assets/css/styles.css` — local responsive styles
 - `assets/images/` — documented local imagery
 - `assets/icons/favicon.svg` — local SR monogram
 - `ATTRIBUTIONS.md` — public image source and rights notes
-- `robots.txt` — permits crawlers to read the page-level `noindex` directive
 - `.nojekyll` — serves the static files directly on GitHub Pages
 
 ## Local preview
@@ -29,19 +33,10 @@ python3 -m http.server 8000
 
 Then open <http://localhost:8000/>.
 
-## Launch checklist placeholder
+## Maintenance
 
-The production launch is outside this pass. A later authorized launch should:
+Preserve `CNAME`, keep the custom 404 `noindex`, and update the sitemap `lastmod` only when homepage content or metadata is deployed. Before publishing, validate the canonical URL, robots directives, sitemap, JSON-LD, social metadata, local assets, external links, redirects, responsive layouts, and HTTPS behavior.
 
-- remove the page-level `noindex` directives;
-- add the production canonical URL and sitemap;
-- connect the approved custom domain only after DNS and redirect planning;
-- revalidate links, accessibility, responsive layouts, and search metadata.
+The curriculum vitae remains externally hosted on Dropbox at <https://www.dropbox.com/scl/fi/5q4mvbvx5kduhftkxqccl/samuel_rhodes_CV.pdf?rlkey=bo6b60njrqkesnyrqj9zi7zkp&raw=1>. Do not copy it into this repository.
 
-No analytics, trackers, forms, external fonts, JavaScript libraries, frameworks, build dependencies, or GitHub Actions workflows are used.
-
-## Pass 3 review state
-
-Pass 3 replaces the prior Washington room photograph with a local web derivative of the direct John Trumbull painting reproduction, introduces a deliberate two-line hero name, removes the redundant visible hero label, converts the teaching self-quotation into ordinary prose, and changes both Dropbox CV links to the `raw=1` form.
-
-This remains a review-only, `noindex` staging preview. The custom domain is not connected. The approved Pass 2 headshot and Ronald Reagan classroom photograph remain unchanged, and source images and validation records remain outside the public repository.
+No analytics, trackers, forms, external fonts, JavaScript libraries, frameworks, build dependencies, CMS, or GitHub Actions workflows are used.
