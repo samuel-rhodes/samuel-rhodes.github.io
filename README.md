@@ -37,6 +37,6 @@ Then open <http://localhost:8000/>.
 
 Preserve `CNAME`, keep the custom 404 `noindex`, and update the sitemap `lastmod` only when homepage content or metadata is deployed. Before publishing, validate the canonical URL, robots directives, sitemap, JSON-LD, social metadata, local assets, external links, redirects, responsive layouts, and HTTPS behavior.
 
-The curriculum vitae remains externally hosted on Dropbox at <https://www.dropbox.com/scl/fi/5q4mvbvx5kduhftkxqccl/samuel_rhodes_CV.pdf?rlkey=bo6b60njrqkesnyrqj9zi7zkp&raw=1>. Do not copy it into this repository.
+The curriculum vitae remains externally hosted on Dropbox at <https://www.dropbox.com/scl/fi/ld8k0oouti2bj6t06jxuj/samuel_rhodes_CV.pdf?rlkey=38bgi4dd77kejkx2pn6xca8h7&e=3&raw=1>. Do not copy it into this repository.
 
 No analytics, trackers, forms, external fonts, JavaScript libraries, frameworks, build dependencies, CMS, or GitHub Actions workflows are used.
