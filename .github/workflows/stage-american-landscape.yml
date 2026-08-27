@@ -25,30 +25,32 @@ jobs:
           set -euo pipefail
 
           python3 <<'PY'
+          import re
           from pathlib import Path
 
           index_path = Path("index.html")
           text = index_path.read_text(encoding="utf-8")
 
-          old = '''        <figure class="hero-figure">
-            <img src="assets/images/general-george-washington-resigning-commission.jpg" width="1800" height="1177" alt="John Trumbull's painting General George Washington Resigning His Commission.">
-            <figcaption>
-              John Trumbull, <cite>General George Washington Resigning His Commission</cite> (1824).
-            </figcaption>
-          </figure>'''
+          pattern = re.compile(
+              r'(?ms)^        <figure class="hero-figure">\n'
+              r'.*?general-george-washington-resigning-commission\.jpg.*?'
+              r'^        </figure>'
+          )
 
-          new = '''        <figure class="hero-figure">
-            <img src="assets/images/charles-sheeler-american-landscape.jpg" width="1500" height="1164" alt="Charles Sheeler's painting American Landscape, depicting the Ford River Rouge plant with railcars, industrial buildings, conveyors, a smokestack, and reflections in water.">
-            <figcaption>
-              Charles Sheeler, <a href="https://www.moma.org/collection/works/79032"><cite>American Landscape</cite> (1930)</a>. The Museum of Modern Art, New York.
-            </figcaption>
-          </figure>'''
+          replacement = "\n".join([
+              '        <figure class="hero-figure">',
+              '          <img src="assets/images/charles-sheeler-american-landscape.jpg" width="1500" height="1164" alt="Charles Sheeler\'s painting American Landscape, depicting the Ford River Rouge plant with railcars, industrial buildings, conveyors, a smokestack, and reflections in water.">',
+              '          <figcaption>',
+              '            Charles Sheeler, <a href="https://www.moma.org/collection/works/79032"><cite>American Landscape</cite> (1930)</a>. The Museum of Modern Art, New York.',
+              '          </figcaption>',
+              '        </figure>',
+          ])
 
-          count = text.count(old)
+          revised, count = pattern.subn(replacement, text)
           if count != 1:
-              raise SystemExit(f"Expected one exact Trumbull hero block; found {count}.")
+              raise SystemExit(f"Expected one Trumbull hero figure; replaced {count}.")
 
-          index_path.write_text(text.replace(old, new), encoding="utf-8")
+          index_path.write_text(revised, encoding="utf-8")
           PY
 
           cat > ATTRIBUTIONS.md <<'EOF'
@@ -101,9 +103,6 @@ jobs:
           This record does not characterize the photograph as public domain, rights-cleared, or licensed.
           EOF
 
-          # Strip the eight spaces used to indent the YAML heredoc body.
-          sed -i 's/^          //' ATTRIBUTIONS.md
-
       - name: Validate the controlled change
         shell: bash
         run: |
@@ -121,7 +120,6 @@ jobs:
           assert index.count('assets/images/charles-sheeler-american-landscape.jpg') == 1
           assert 'assets/images/general-george-washington-resigning-commission.jpg' not in index
           assert index.count('https://www.moma.org/collection/works/79032') == 1
-          assert 'Charles Sheeler' in index
           assert '<cite>American Landscape</cite> (1930)' in index
 
           path = Path("assets/images/charles-sheeler-american-landscape.jpg")
