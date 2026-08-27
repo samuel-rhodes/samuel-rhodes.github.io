@@ -25,38 +25,95 @@ jobs:
           set -euo pipefail
           mkdir -p assets/images
 
+          cat > /tmp/jpeg_dimensions.py <<'PY'
+          import struct
+          import sys
+
+          path = sys.argv[1]
+          sof_markers = {
+              0xC0, 0xC1, 0xC2, 0xC3,
+              0xC5, 0xC6, 0xC7,
+              0xC9, 0xCA, 0xCB,
+              0xCD, 0xCE, 0xCF,
+          }
+
+          with open(path, "rb") as handle:
+              if handle.read(2) != b"\xff\xd8":
+                  raise SystemExit("not a JPEG")
+
+              while True:
+                  byte = handle.read(1)
+                  if not byte:
+                      raise SystemExit("JPEG dimensions not found")
+                  if byte != b"\xff":
+                      continue
+
+                  while byte == b"\xff":
+                      byte = handle.read(1)
+                  marker = byte[0]
+
+                  if marker in {0xD8, 0xD9}:
+                      continue
+
+                  length_bytes = handle.read(2)
+                  if len(length_bytes) != 2:
+                      raise SystemExit("truncated JPEG")
+                  segment_length = struct.unpack(">H", length_bytes)[0]
+
+                  if marker in sof_markers:
+                      payload = handle.read(5)
+                      if len(payload) != 5:
+                          raise SystemExit("truncated SOF segment")
+                      _, height, width = struct.unpack(">BHH", payload)
+                      print(width, height)
+                      break
+
+                  handle.seek(segment_length - 2, 1)
+          PY
+
           urls=(
-            "https://uploads1.wikiart.org/images/charles-sheeler/american-landscape-1930.jpg!Large.jpg"
             "https://uploads1.wikiart.org/images/charles-sheeler/american-landscape-1930.jpg"
             "https://oss.pic699.com/charles-sheeler/american-landscape-1930.jpg"
+            "https://uploads1.wikiart.org/images/charles-sheeler/american-landscape-1930.jpg!Large.jpg"
           )
 
           downloaded=false
+          candidate="$(mktemp --suffix=.jpg)"
+          trap 'rm -f "$candidate"' EXIT
+
           for url in "${urls[@]}"; do
-            if curl --location --fail --retry 3 --retry-delay 2 \
+            rm -f "$candidate"
+            if ! curl --location --fail --retry 3 --retry-delay 2 \
               --user-agent "Mozilla/5.0" \
               "$url" \
-              --output assets/images/charles-sheeler-american-landscape.jpg; then
-              downloaded=true
-              break
+              --output "$candidate"; then
+              continue
             fi
+
+            mime_type="$(file --brief --mime-type "$candidate")"
+            file_size="$(stat --format=%s "$candidate")"
+            if [[ "$mime_type" != "image/jpeg" ]] || (( file_size < 50000 )); then
+              continue
+            fi
+
+            if ! dimensions="$(python3 /tmp/jpeg_dimensions.py "$candidate")"; then
+              continue
+            fi
+            read -r width height <<< "$dimensions"
+
+            if (( width < 1200 || height < 900 )); then
+              echo "Skipping undersized candidate from $url: ${width}x${height}" >&2
+              continue
+            fi
+
+            mv "$candidate" assets/images/charles-sheeler-american-landscape.jpg
+            downloaded=true
+            echo "Selected ${width}x${height} image from $url"
+            break
           done
 
           if [[ "$downloaded" != "true" ]]; then
-            echo "Unable to retrieve the painting from any approved source." >&2
-            exit 1
-          fi
-
-          mime_type="$(file --brief --mime-type assets/images/charles-sheeler-american-landscape.jpg)"
-          file_size="$(stat --format=%s assets/images/charles-sheeler-american-landscape.jpg)"
-
-          if [[ "$mime_type" != "image/jpeg" ]]; then
-            echo "Unexpected MIME type: $mime_type" >&2
-            exit 1
-          fi
-
-          if (( file_size < 50000 )); then
-            echo "Downloaded image is unexpectedly small: $file_size bytes" >&2
+            echo "Unable to retrieve a sufficiently large painting image." >&2
             exit 1
           fi
 
@@ -67,5 +124,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/images/charles-sheeler-american-landscape.jpg
-          git commit -m "Add Charles Sheeler American Landscape image"
+          git commit -m "Upgrade Charles Sheeler American Landscape image"
           git push origin HEAD:website-pass-04-american-landscape
