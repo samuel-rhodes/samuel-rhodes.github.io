@@ -1,0 +1,71 @@
+name: Stage American Landscape image
+
+on:
+  push:
+    branches:
+      - website-pass-04-american-landscape
+    paths:
+      - .github/workflows/stage-american-landscape.yml
+
+permissions:
+  contents: write
+
+jobs:
+  stage-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the website branch
+        uses: actions/checkout@v4
+        with:
+          ref: website-pass-04-american-landscape
+
+      - name: Download the selected painting
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/images
+
+          urls=(
+            "https://uploads1.wikiart.org/images/charles-sheeler/american-landscape-1930.jpg!Large.jpg"
+            "https://uploads1.wikiart.org/images/charles-sheeler/american-landscape-1930.jpg"
+            "https://oss.pic699.com/charles-sheeler/american-landscape-1930.jpg"
+          )
+
+          downloaded=false
+          for url in "${urls[@]}"; do
+            if curl --location --fail --retry 3 --retry-delay 2 \
+              --user-agent "Mozilla/5.0" \
+              "$url" \
+              --output assets/images/charles-sheeler-american-landscape.jpg; then
+              downloaded=true
+              break
+            fi
+          done
+
+          if [[ "$downloaded" != "true" ]]; then
+            echo "Unable to retrieve the painting from any approved source." >&2
+            exit 1
+          fi
+
+          mime_type="$(file --brief --mime-type assets/images/charles-sheeler-american-landscape.jpg)"
+          file_size="$(stat --format=%s assets/images/charles-sheeler-american-landscape.jpg)"
+
+          if [[ "$mime_type" != "image/jpeg" ]]; then
+            echo "Unexpected MIME type: $mime_type" >&2
+            exit 1
+          fi
+
+          if (( file_size < 50000 )); then
+            echo "Downloaded image is unexpectedly small: $file_size bytes" >&2
+            exit 1
+          fi
+
+      - name: Commit the local image asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/charles-sheeler-american-landscape.jpg
+          git commit -m "Add Charles Sheeler American Landscape image"
+          git push origin HEAD:website-pass-04-american-landscape
