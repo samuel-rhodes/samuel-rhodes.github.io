@@ -1,6 +1,17 @@
 # Image Attributions
 
-## John Trumbull hero painting
+## Charles Sheeler hero painting
+
+**Work:** Charles Sheeler, *American Landscape* (1930), oil on canvas, 24 × 31 in. (61 × 78.8 cm), The Museum of Modern Art, New York.
+
+- Collection record: <https://www.moma.org/collection/works/79032>
+- Credit line: Gift of Abby Aldrich Rockefeller; MoMA object no. 166.1934.
+- Source image: WikiArt, `American Landscape, 1930 by Charles Sheeler`.
+- Source file: <https://uploads1.wikiart.org/images/charles-sheeler/american-landscape-1930.jpg>
+- The website uses a local 1500 × 1164 pixel JPEG and does not hotlink the displayed image.
+- No rights or license status is asserted by this record.
+
+## Archived John Trumbull painting
 
 **Work:** John Trumbull, *General George Washington Resigning His Commission* (1824), oil on canvas, United States Capitol Rotunda.
 
@@ -8,7 +19,7 @@
 - Source page: <https://commons.wikimedia.org/wiki/File:General_George_Washington_Resigning_his_Commission.jpg>
 - Source/photographer listed by Wikimedia Commons: Architect of the Capitol
 - Status: Public domain in the United States; Wikimedia Commons marks the faithful reproduction with the Creative Commons Public Domain Mark 1.0.
-- The website uses a local web derivative and does not hotlink the Commons file.
+- The repository retains a local web derivative, but it is no longer displayed as the website hero image.
 
 ## Samuel C. Rhodes headshot
 
