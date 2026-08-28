@@ -1,15 +1,15 @@
 :root {
   color-scheme: light;
-  --ink: #18222b;
-  --ink-soft: #39434b;
-  --paper: #f7f4ed;
-  --white: #ffffff;
-  --warm: #e8dfd0;
-  --navy: #142630;
-  --navy-light: #dce5e7;
-  --rust: #8a3f2b;
-  --gold: #d5a24a;
-  --line: rgba(24, 34, 43, 0.22);
+  --ink: #2b3436;
+  --ink-soft: #4f5a5c;
+  --paper: #f0f1e8;
+  --white: #f8f8f0;
+  --warm: #d6d6c3;
+  --navy: #354a50;
+  --navy-light: #c8d2cf;
+  --rust: #79503c;
+  --gold: #cbb77a;
+  --line: rgba(43, 52, 54, 0.24);
   --serif: Georgia, "Times New Roman", Times, serif;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --shell: 72rem;
@@ -115,7 +115,7 @@ h3 {
   left: 0.75rem;
   padding: 0.7rem 1rem;
   background: var(--gold);
-  color: #111820;
+  color: #2b3436;
   font-weight: 700;
   transform: translateY(-160%);
 }
@@ -234,7 +234,7 @@ h3 {
 .hero-figure figcaption {
   max-width: 52rem;
   margin-top: 0.8rem;
-  color: #bec9cd;
+  color: #c8d2cf;
   font-size: 0.76rem;
   line-height: 1.5;
 }
@@ -321,7 +321,7 @@ h3 {
 .button:hover {
   background: var(--gold);
   border-color: var(--gold);
-  color: #111820;
+  color: #2b3436;
 }
 
 .about-notes {
@@ -510,8 +510,8 @@ h3 {
 
 .site-footer {
   padding-block: 2.5rem;
-  background: #0d1a21;
-  color: #d5dddf;
+  background: #243438;
+  color: #d5ddda;
 }
 
 .footer-inner {
